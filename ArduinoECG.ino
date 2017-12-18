@@ -1,13 +1,15 @@
+
+
 void setup()
 {
-
-  /* add setup code here */
+	Serial.begin(9600);
+	pinMode(2, OUTPUT);
 
 }
 
 void loop()
 {
-
-  /* add main program code here */
+	Serial.println(analogRead(A1));
+	digitalWrite(2, HIGH);
 
 }
