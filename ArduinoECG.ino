@@ -80,7 +80,7 @@ public:
 		else {
 			value = analogRead(pin);
 			//Serial.println(pin);
-			Serial.println(value);
+			Serial.println((String)value);
 			state = on;
 		}
 	}
