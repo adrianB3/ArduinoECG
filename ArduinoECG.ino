@@ -74,13 +74,12 @@ public:
 
 		if (loPlus == 1 || loMinus == 1) {
 			value = -1;
-			Serial.println(value);
+			Serial.println(float(value));
 			state = wait;
 		}
 		else {
 			value = analogRead(pin);
-			//Serial.println(pin);
-			Serial.println((String)value);
+			Serial.println(float(value));
 			state = on;
 		}
 	}
@@ -92,7 +91,7 @@ public:
 
 led ledRosu(2, off); //real 13
 led ledAlbastru(3, off); //real 12
-ecgSensor ecg(10, 11, 'A1');
+ecgSensor ecg(A1, 10, 11);
 
 void setup()
 {
