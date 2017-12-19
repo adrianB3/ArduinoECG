@@ -110,8 +110,12 @@ void loop()
 	case wait: 
 		ledRosu.setOn();
 		ledAlbastru.setOff();
+		lcd.setCursor(0, 0);
+		lcd.write("Waiting..");
 		break;
 	case on: 
+		lcd.setCursor(0, 0);
+		lcd.write("Reading data");
 		ledRosu.setOff();
 		ledAlbastru.setOn();
 		ecg.readData();
