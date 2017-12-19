@@ -4,6 +4,7 @@
 // Above for testing purposes
 
 //#include <LiquidCrystal.h>
+//LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
 
