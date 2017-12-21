@@ -1,11 +1,10 @@
-#include <LiquidCrystal_I2C.h>
-#include <Wire.h>
+//#include <LiquidCrystal_I2C.h>
+//#include <Wire.h>
+//LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
 // Above for testing purposes
 
-//#include <LiquidCrystal.h>
-//LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
-
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 
 typedef enum {on, off, wait}sysState; //definire stari sistem
 
@@ -63,12 +62,9 @@ public:
 	}
 
 	void readData() {
-		//this->loPlus = digitalRead(loPlusPin);
-		//this->loMinus = digitalRead(loMinusPin);
-		//for testing
-		loPlus = 0;
-		loMinus = 0;
-
+		this->loPlus = digitalRead(loPlusPin);
+		this->loMinus = digitalRead(loMinusPin);
+		
 		if (loPlus == 1 || loMinus == 1) { 
 			// daca exista interferente sau un conector este desprins
 			// este returnata valoarea -1 si sistemul este in asteptare
@@ -89,9 +85,9 @@ public:
 	}
 };
 
-led ledRosu(2,off); //real 13
-led ledAlbastru(3,off); //real 12
-ecgSensor ecg(A1, 10, 11);
+led ledRosu(13,off);
+led ledAlbastru(12,off);
+ecgSensor ecg(A0, 10, 11);
 
 void setup()
 {	//initializari
