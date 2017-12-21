@@ -49,7 +49,7 @@ public:
 
 class ecgSensor : public sysComponent {
 	sysState ecgState;
-	float value;
+	int value;
 	int loPlus, loMinus;
 	int loPlusPin, loMinusPin;
 public:
@@ -79,7 +79,7 @@ public:
 		else {
 			// se trimit date in interfata seriala spre a fi prelucrate de Processing
 			value = analogRead(pin);
-			Serial.println(float(value));
+			Serial.println(int(value));
 			ecgState = on;
 		}
 	}
@@ -114,13 +114,15 @@ void loop()
 		ledRosu.setOn();
 		ledAlbastru.setOff();
 		lcd.setCursor(0, 0);
-		lcd.write("Waiting for");
+		lcd.print("Waiting for");
 		lcd.setCursor(0, 1);
-		lcd.write("signal...");
+		lcd.print("signal...");
 		break;
 	case on: 
 		lcd.setCursor(0, 0);
 		lcd.write("Getting signal!");
+		lcd.setCursor(0, 1);
+		lcd.print(analogRead(ecg.getPin()));
 		ledRosu.setOff();
 		ledAlbastru.setOn();
 		ecg.readData();
