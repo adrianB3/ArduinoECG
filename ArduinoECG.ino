@@ -7,22 +7,22 @@
 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
 
-typedef enum {on, off, wait}sysState; //
+typedef enum {on, off, wait}sysState; //definire stari sistem
 
 class sysComponent {
 protected:
 	uint8_t pin,IO;
 public:
 	sysComponent(uint8_t pin) {
-		this->pin = pin;
+		this->pin = pin; //definire pin folosit de componenta
 	}
 	
 	virtual void setIO(uint8_t IO) {
-		this->IO = IO;
+		this->IO = IO; //definire tip pin intrare/iesire
 	}
 
 	virtual uint8_t getPin() {
-		return pin;
+		return pin; // returnare pin folosit de componenta
 	}
 
 	virtual void setOn() {};
@@ -37,12 +37,12 @@ public:
 	}
 
 	void setOn() {
-		digitalWrite(pin, HIGH);
+		digitalWrite(pin, HIGH); // activarea unui led
 		this->ledState = on;
 	}
 
 	void setOff() {
-		digitalWrite(pin, LOW);
+		digitalWrite(pin, LOW); // dezactivarea unui led
 		this->ledState = off;
 	}
 };
@@ -56,7 +56,7 @@ public:
 	ecgSensor(uint8_t pin, int loPlusPin, int loMinusPin) :sysComponent(pin) {
 		this->pin = pin;
 		this->loPlusPin = loPlusPin;
-		this->loMinusPin = loMinusPin;
+		this->loMinusPin = loMinusPin; // definire pini folositi de senzorul ecg
 
 		pinMode(loPlusPin, INPUT);
 		pinMode(loMinusPin, INPUT);
@@ -69,12 +69,15 @@ public:
 		loPlus = 0;
 		loMinus = 0;
 
-		if (loPlus == 1 || loMinus == 1) {
-			value = -1;
+		if (loPlus == 1 || loMinus == 1) { 
+			// daca exista interferente sau un conector este desprins
+			// este returnata valoarea -1 si sistemul este in asteptare
+			value = -1;						
 			Serial.println(value);
 			ecgState = wait;
 		}
 		else {
+			// se trimit date in interfata seriala spre a fi prelucrate de Processing
 			value = analogRead(pin);
 			Serial.println(float(value));
 			ecgState = on;
@@ -82,7 +85,7 @@ public:
 	}
 
 	sysState getState() {
-		return ecgState;
+		return ecgState; // returneaza starea curenta a senzorului
 	}
 };
 
@@ -91,8 +94,8 @@ led ledAlbastru(3,off); //real 12
 ecgSensor ecg(A1, 10, 11);
 
 void setup()
-{
-	Serial.begin(9600);
+{	//initializari
+	Serial.begin(9600); //comunicare la 9600 baud
 	lcd.begin(16, 2);
 	lcd.clear();
 	ledRosu.setIO(OUTPUT);
@@ -103,9 +106,9 @@ void setup()
 void loop()
 {
 	sysState state;
-	ecg.readData();
-	state = ecg.getState();
-	switch (state)
+	ecg.readData(); // citire date
+	state = ecg.getState(); 
+	switch (state) // se efectueaza actiuni in functie de starea in care se afla sistemul
 	{
 	case wait: 
 		ledRosu.setOn();
