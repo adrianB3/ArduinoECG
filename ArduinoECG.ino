@@ -18,12 +18,6 @@ public:
 		this->pin = pin;
 	}
 
-	/*virtual void setPin(char IO) {
-		pinMode(pin, IO);
-	}*/
-
-	virtual void setPin() {};
-
 	virtual uint8_t getPin() {
 		return pin;
 	}
